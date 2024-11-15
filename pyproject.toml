@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "hpquiz"
+version = "0.1.0"
+description = "Harry Potter Quiz Application"
+authors = ["Crussader <parikshit.rao04@gmail.com>"]
+license = "BSD3"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+pymongo = "^4.10.1"
+fastapi = "^0.115.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
