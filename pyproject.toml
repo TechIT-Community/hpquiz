@@ -12,6 +12,8 @@ pymongo = "^4.10.1"
 fastapi = "^0.115.5"
 uvicorn = {extras = ["standard"], version = "^0.32.0"}
 
+[tool.poetry.scripts]
+fastapi = "hpquiz.backend.app:app"
 
 [build-system]
 requires = ["poetry-core"]
