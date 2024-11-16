@@ -131,3 +131,21 @@ class Database:
             return cursor
             
         return list(self.execute_with_session(find_operation))
+    
+    def insert_many(self, collection_name: str, data: list[Any]):
+        """
+        Inserts multiple documents into the specified collection.
+
+        Args:
+            collection_name (str): The name of the collection where the documents will be inserted.
+            data (List[Any]): The list of documents to be inserted.
+
+        Returns:
+            InsertManyResult: The result of the insert operation.
+
+        Raises:
+            Exception: If the insert operation fails.
+        """
+        return self.execute_with_session(
+            lambda session: self.get_collection(collection_name).insert_many(data, session=session)
+        )
