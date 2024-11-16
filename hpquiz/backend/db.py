@@ -1,6 +1,9 @@
-from pymongo import MongoClient
+from typing import Any, Callable, Literal, Union
+
+from pymongo import MongoClient, ASCENDING, DESCENDING
 from pymongo.client_session import ClientSession
-from typing import Any, Optional, Callable
+
+
 
 class Database:
     """
@@ -108,3 +111,23 @@ class Database:
         """
         
         return self.execute_with_session(lambda session: self.get_collection(collection_name).delete_one(query, session=session))
+    
+    def find(self, collection_name: str, query: dict, sort_key: str = None, order: Union[Literal[1], Literal[-1]] = ASCENDING):
+        """
+        Finds documents in a specified collection based on a query.
+        Args:
+            collection_name (str): The name of the collection to search in.
+            query (dict): The query to filter documents.
+            sort_key (str, optional): The key to sort the results by. Defaults to None.
+            order (Union[Literal[1], Literal[-1]], optional): The order of sorting, either ascending (1) or descending (-1). Defaults to ASCENDING[1].
+        Returns:
+            list: A list of documents that match the query.
+        """
+        
+        def find_operation(session):
+            cursor = self.get_collection(collection_name).find(query, session=session)
+            if sort_key:
+                cursor = cursor.sort(sort_key)
+            return cursor
+            
+        return list(self.execute_with_session(find_operation))
